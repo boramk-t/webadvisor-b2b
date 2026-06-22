@@ -1,10 +1,10 @@
-/* ===== U+ AICC · 상담 어드바이저 (shadcn 토큰 기반) ===== */
+﻿/* ===== U+ AICC · 상담 어드바이저 (shadcn 토큰 기반) ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --primary: #7732F8;
-  --primary-hover: #6826e0;
-  --primary-pale: #F3EEFE;
+  --primary: #008CCD;
+  --primary-hover: #0077B0;
+  --primary-pale: #E8FEFB;
   --fg: #020617;
   --fg-soft: #171717;
   --muted: #64748B;
@@ -295,7 +295,7 @@ body {
 }
 .chat-bubble.suggestion:hover { background: #e8e4f4; }
 .chat-bubble.user-bubble {
-  background: #DDD6FE; max-width: 300px;
+  background: #D6FFC8; max-width: 300px;
 }
 .chat-bubble.error-bubble {
   background: var(--surface-2); color: var(--red);
@@ -389,7 +389,7 @@ body {
 }
 .info-alert.danger .info-alert-text { color: #DC2626; font-weight: 500; }
 .info-alert.purple {
-  background: linear-gradient(0deg, rgba(255,255,255,0.95), rgba(255,255,255,0.95)), #7732F8;
+  background: linear-gradient(0deg, rgba(255,255,255,0.95), rgba(255,255,255,0.95)), #008CCD;
 }
 .info-alert.purple .info-alert-text { color: var(--primary); font-weight: 500; }
 .info-alert.success {
@@ -408,7 +408,7 @@ body {
 .sys-time { font-size: 11px; color: var(--muted); }
 
 .msg-highlight {
-  background: linear-gradient(0deg, rgba(255,255,255,0.8), rgba(255,255,255,0.8)), #7732F8;
+  background: linear-gradient(0deg, rgba(255,255,255,0.8), rgba(255,255,255,0.8)), #008CCD;
   padding: 1px 4px; border-radius: 3px;
 }
 
