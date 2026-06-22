@@ -52,9 +52,8 @@ body {
 }
 .sidebar.collapsed .sb-brand .brand-meta,
 .sidebar.collapsed .sb-group-label,
-.sidebar.collapsed .sb-item span:not(.ic),
 .sidebar.collapsed .sb-profile .profile-meta,
-.sidebar.collapsed .sb-profile svg,
+.sidebar.collapsed .sb-profile > svg,
 .sidebar.collapsed .sb-collapse {
   display: none;
 }
@@ -69,6 +68,22 @@ body {
 .sidebar.collapsed .sb-item {
   justify-content: center;
   padding: 8px 0;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  gap: 0;
+}
+.sidebar.collapsed .sb-item .ic {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar.collapsed .sb-item .ic svg {
+  width: 20px;
+  height: 20px;
 }
 .sidebar.collapsed .sb-profile {
   justify-content: center;
