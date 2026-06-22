@@ -72,6 +72,8 @@ body {
   height: 40px;
   overflow: hidden;
   gap: 0;
+  font-size: 0;
+  color: transparent;
 }
 .sidebar.collapsed .sb-item .ic {
   width: 20px;
