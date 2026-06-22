@@ -15,6 +15,17 @@ function toggleSidebar() {
   sb.classList.toggle('collapsed');
 }
 
+/* 실시간 상담 검색 토글 */
+function toggleLiveSearch() {
+  const el = document.getElementById('liveSearch');
+  if (el.style.display === 'none') {
+    el.style.display = 'flex';
+    el.querySelector('input').focus();
+  } else {
+    el.style.display = 'none';
+  }
+}
+
 /* 상담 세션 탭 전환 */
 function selectTab(el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -43,12 +54,26 @@ function pickTone(el) {
   el.classList.add('on');
 }
 
-/* 어시스트 모드 전환 */
-function pickMode(el, mode) {
-  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  toast('어시스트 모드: ' + mode.charAt(0).toUpperCase() + mode.slice(1));
+/* 어시스트 모드 드롭다운 */
+function toggleModelDropdown() {
+  const dd = document.getElementById('modelDropdown');
+  dd.classList.toggle('show');
 }
+function selectModel(el, name) {
+  document.querySelectorAll('.model-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('modelLabel').textContent = name;
+  document.getElementById('modelDropdown').classList.remove('show');
+  toast('모드 변경: ' + name);
+}
+
+/* 드롭다운 외부 클릭 닫기 */
+document.addEventListener('click', (e) => {
+  const wrap = document.querySelector('.model-dropdown-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('modelDropdown').classList.remove('show');
+  }
+});
 
 /* 어시스트 전송 */
 function sendAssist() {

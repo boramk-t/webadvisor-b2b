@@ -139,12 +139,12 @@
             <span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span>
             SOS
           </button>
-          <button class="icon-btn" title="대화 검색" onclick="toast('대화 검색')">
+          <button class="icon-btn" title="대화 검색" onclick="toggleLiveSearch()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#020617" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </button>
         </div>
 
-        <div class="live-search">
+        <div class="live-search" id="liveSearch" style="display:none;">
           <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
           <input type="text" placeholder="대화 내용 검색" />
         </div>
@@ -227,20 +227,6 @@
       <section class="assist">
         <div class="assist-head">
           <span class="panel-title">상담 어시스트</span>
-          <div class="mode-selector" id="modeSelector">
-            <button class="mode-btn active" onclick="pickMode(this, 'auto')" title="Auto 모드">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m6.8 15-3.5 2"/><path d="m20.7 17-3.5-2"/><path d="M6.8 9 3.3 7"/><path d="m20.7 7-3.5 2"/><circle cx="12" cy="12" r="4"/></svg>
-              <span class="mode-label">Auto</span>
-            </button>
-            <button class="mode-btn" onclick="pickMode(this, 'quick')" title="Quick 모드">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              <span class="mode-label">Quick</span>
-            </button>
-            <button class="mode-btn" onclick="pickMode(this, 'thinking')" title="Thinking 모드">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
-              <span class="mode-label">Thinking</span>
-            </button>
-          </div>
           <span class="spacer"></span>
           <div class="switch on" id="assistSwitch" onclick="toggleAssist()">
             <span class="switch-label">어시스트</span>
@@ -300,7 +286,6 @@
               <div class="answer-sources">
                 <button class="fb-btn" title="좋아요" onclick="toast('피드백 감사합니다.')">👍</button>
                 <button class="fb-btn" title="아쉬워요" onclick="toast('피드백 감사합니다.')">👎</button>
-                <button class="fb-btn" title="복사" onclick="toast('복사되었습니다.')">📋</button>
               </div>
             </div>
           </div>
@@ -326,7 +311,6 @@
               <div class="answer-sources">
                 <button class="fb-btn" title="좋아요" onclick="toast('피드백 감사합니다.')">👍</button>
                 <button class="fb-btn" title="아쉬워요" onclick="toast('피드백 감사합니다.')">👎</button>
-                <button class="fb-btn" title="복사" onclick="toast('복사되었습니다.')">�</button>
               </div>
             </div>
           </div>
@@ -351,7 +335,6 @@
               <div class="answer-sources">
                 <button class="fb-btn" title="좋아요" onclick="toast('피드백 감사합니다.')">👍</button>
                 <button class="fb-btn" title="아쉬워요" onclick="toast('피드백: 부정확한 답변으로 신고됨')">👎</button>
-                <button class="fb-btn" title="복사" onclick="toast('복사되었습니다.')">📋</button>
               </div>
             </div>
           </div>
@@ -413,10 +396,17 @@
                 <button onclick="pickTone(this)">간결</button>
               </div>
               <span class="spacer"></span>
-              <button class="model-btn" onclick="toast('모델 선택')">
-                기본 모델
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#020617" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </button>
+              <div class="model-dropdown-wrap">
+                <button class="model-btn" onclick="toggleModelDropdown()">
+                  <span id="modelLabel">빠른답변</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#020617" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="model-dropdown" id="modelDropdown">
+                  <div class="model-option active" onclick="selectModel(this, '빠른답변')">빠른답변</div>
+                  <div class="model-option" onclick="selectModel(this, '깊은생각')">깊은생각</div>
+                  <div class="model-option" onclick="selectModel(this, '자동')">자동</div>
+                </div>
+              </div>
               <button class="send-btn" onclick="sendAssist()" title="보내기">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F8FAFC" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
               </button>
